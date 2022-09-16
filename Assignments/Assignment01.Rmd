@@ -20,7 +20,8 @@ upstream        https://github.com/ENV872/EDA-Fall2022 (fetch)
 upstream        DISABLE (push)
 
 ### My Git changes:
-1423195 (HEAD -> main) Assignment01 pushed to Git.
+5c16480 (HEAD -> main) Updates to Assignment01.
+1423195 Assignment01 pushed to Git.
 9c1a663 New lessons.
 fa4e72b (upstream/main) Add Lesson 3 Rmd files
 c2de398 Add Assignment 2
@@ -33,4 +34,3 @@ e873dae Finished notes
 638b02f Updates
 b1c9a46 Add new GitDemo file
 c9a0769 Merge branch 'ENV872:main' into main
-b94f9ee uploaded Lab2 file
