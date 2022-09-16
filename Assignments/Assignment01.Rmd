@@ -9,22 +9,28 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## My Git settings:
+user.name=gurubandaa
+user.email=gurubandaa.khalsa@duke.edu
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### My Git remote settings:
+origin  https://github.com/gurubandaa/EDA-Fall2022 (fetch)
+origin  https://github.com/gurubandaa/EDA-Fall2022 (push)
+upstream        https://github.com/ENV872/EDA-Fall2022 (fetch)
+upstream        DISABLE (push)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### My Git changes:
+1423195 (HEAD -> main) Assignment01 pushed to Git.
+9c1a663 New lessons.
+fa4e72b (upstream/main) Add Lesson 3 Rmd files
+c2de398 Add Assignment 2
+31c8273 (origin/main, origin/HEAD) Merge branch 'main' of https://github.com/gurubandaa/EDA-Fall2022
+e873dae Finished notes
+27dfe84 Copy of Lab 02
+35b8c32 Old stuff
+416e92b Old data
+0dc73e5 A couple more edits.
+638b02f Updates
+b1c9a46 Add new GitDemo file
+c9a0769 Merge branch 'ENV872:main' into main
+b94f9ee uploaded Lab2 file
