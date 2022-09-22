@@ -31,12 +31,26 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 4.  Insert comments in your code to describe what you are doing.
 
 ```{r}
-#1. 
+#1. I used the sequence function to generate a sequence of numbers from one to 100, increasing by fours.  I also assigned the sequence the name "four_sequence."
+seq(1, 100, 4)
+four_sequence <- seq(1, 100, 4)
 
-#2. 
+#2. I used the mean and median functions to compute the mean and median of the sequence created above, "four_sequence."  I then assigned the mean function the name "seqmean" and the median sequence the name "seqmedian" so that they would be easy to call in the following conditional statement.
+mean(four_sequence)
+median(four_sequence)
+seqmean <- mean(four_sequence)
+seqmedian <- median(four_sequence)
 
-#3. 
+#3. I used a conditional statement to ask R to determine whether the mean is greater than the median or if they are equal to one another.
+if (seqmean > seqmedian) {
+  print("The mean is greater than the median.")
+} else if (seqmean < seqmedian) {
+  print("The median is greater than the mean.")
+} else {
+  print("The mean and median are equal.")
+}
 
+#4. I inserted comments in my code to describe what I am doing.
 ```
 
 ## Basics Day 2
@@ -50,7 +64,18 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 8.  Label the columns of your data frame with informative titles.
 
 ```{r}
+#5. I created three vectors titled "students," "scores," and "passing."
+students <- c(Jimmy, Johnny, Timmy, Victor)
+scores <- c(99, 76, 45, 95)
+passing <- c(TRUE, TRUE, FALSE, TRUE)
 
+#6. I labeled each vector with a comment on what type of vector it is.
+is.vector(students)
+
+#7. 
+
+
+#8. 
 ```
 
 9.  QUESTION: How is this data frame different from a matrix?
