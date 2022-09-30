@@ -26,10 +26,10 @@ The completed exercise is due on Sept 30th.
 
 ```{r,  message = FALSE}
 #1. I checked my working directory, loaded tidyverse, and uploaded and named two datasets.
-setwd("/home/guest/EDA-Fall2022")
 getwd()
+setwd("/Users/survivormangb/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022")
 library(tidyverse)
-Neonics <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors=TRUE)
+Neonics <- read.csv("../Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors=TRUE)
 Litter <- read.csv("./Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv", stringsAsFactors=TRUE)
 ```
 
