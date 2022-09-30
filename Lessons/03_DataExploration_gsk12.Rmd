@@ -75,7 +75,7 @@ library(tidyverse)
 
 Question: What happens in the console when you load a package?
 
-> Answer: 
+> Answer:  
 
 ### Import your datasets
 
