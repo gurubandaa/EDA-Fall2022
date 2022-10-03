@@ -154,8 +154,8 @@ ggplot(Litter) +
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
 ```{r}
-#ggplot(Litter) +
-#  geom_bar(aes(x = dryMass))
+ggplot(Litter) +
+  geom_boxplot(aes(x = dryMass))
 
 #geom_violin(aes(x = dryMass, functionalGroup
 ```
