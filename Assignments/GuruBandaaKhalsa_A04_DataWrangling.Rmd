@@ -32,9 +32,12 @@ The completed exercise is due on Friday, Oct7th @ 5:00pm.
 2. Explore the dimensions, column names, and structure of the datasets. 
 
 ```{r, message = FALSE}
-#1
+#1.
+getwd()
+library(tidyverse)
+library(lubridate)
 
-#2
+#2.
 ```
 
 ## Wrangle individual datasets to create processed files.
