@@ -137,8 +137,6 @@ unique(Litter$collectDate[2018-08])
 ```{r}
 #13. I used the 'unique' function to determine how many plots were sampled at Niwot Ridge.
 unique(Litter$plotID)
-plots <- unique(Litter$plotID)
-#count(Litter$plotID)
 ```
 
 > Answer: The information is obtained from 'unique' different from that obtained from 'summary' because 'unique' is able to delete duplicate entries, whereas 'summary' does not do this.
