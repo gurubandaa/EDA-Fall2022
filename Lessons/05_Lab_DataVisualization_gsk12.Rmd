@@ -133,7 +133,12 @@ Exercise: Plot distributions of AQI values for EPAair.
 # Create several types of plots depicting PM2.5, divided by year. 
 # Choose which plot displays the data best and justify your choice. 
 
-
+EPAair.Ex4 <-
+  ggplot(EPAair, aes(x = PM2.5, y = Year)) +
+  geom_point(aes(color = meanLat), alpha = 0.5) +
+  geom_smooth(method = lm, color = "red") +
+  ylab(expression("0"[3]* "AQI Value"))
+print(EPAair.Ex4)
 
 ```
 
