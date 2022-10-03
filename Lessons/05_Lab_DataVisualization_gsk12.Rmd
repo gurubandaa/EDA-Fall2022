@@ -134,11 +134,32 @@ Exercise: Plot distributions of AQI values for EPAair.
 # Choose which plot displays the data best and justify your choice. 
 
 EPAair.Ex4 <-
-  ggplot(EPAair, aes(x = PM2.5, y = Year)) +
-  geom_point(aes(color = meanLat), alpha = 0.5) +
+  ggplot(EPAair, aes(x = Year, y = PM2.5)) +
+  geom_point(aes(color = meanLat)) +
   geom_smooth(method = lm, color = "red") +
-  ylab(expression("0"[3]* "AQI Value"))
+  ylab(expression("Year"))
 print(EPAair.Ex4)
+
+EPAair.Ex5 <-
+  ggplot(EPAair, aes(x = Year, y = PM2.5)) +
+  geom_bar(aes(color = meanLat)) +
+  geom_smooth(method = lm, color = "red") +
+  ylab(expression("Year"))
+print(EPAair.Ex5)
+
+EPAair.Ex6 <-
+  ggplot(EPAair, aes(x = Year, y = PM2.5)) +
+  geom_boxplot(aes(color = meanLat)) +
+  geom_smooth(method = lm, color = "red") +
+  ylab(expression("Year"))
+print(EPAair.Ex6)
+
+EPAair.Ex7 <-
+  ggplot(EPAair, aes(x = Year, y = PM2.5)) +
+  geom_violin(aes(color = meanLat)) +
+  geom_smooth(method = lm, color = "red") +
+  ylab(expression("Year"))
+print(EPAair.Ex7)
 
 ```
 
