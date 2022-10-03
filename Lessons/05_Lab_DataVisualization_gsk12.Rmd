@@ -71,7 +71,10 @@ Exercise: build your own scatterplots of PeterPaul.chem.nutrients
 ```{r, fig.height = 3, fig.width = 4, warning = FALSE}
 
 # 1. 
-# Plot surface temperatures by day of  year. 
+# Plot surface temperatures by day of  year.
+PeterPaul.chem.nutrients.surface <- filter(PeterPaul.chem.nutrients, depth == 0)
+
+
 # Color your points by year, and facet by lake in two rows.
 # Change the ylab name
 
