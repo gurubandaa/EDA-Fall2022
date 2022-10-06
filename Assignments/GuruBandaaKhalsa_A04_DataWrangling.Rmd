@@ -72,12 +72,14 @@ EPA3$Date <- as.Date(EPA3$Date, format = "%y/%m/%d")
 EPA4$Date <- as.Date(EPA4$Date, format = "%y/%m/%d")
 
 #4. I used the select() function to select the following columns: Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE
-EPA1.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-EPA2.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_O3_NC2018_processed.csv <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_O3_NC2019_processed.csv <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPA3.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPA4.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
-#5. I used the mutate() function to fill all cells in AQS_PARAMETER_DESC with "PM2.5" in the PM2.5 datasets.
+#5. I used the fill() function to fill all cells in AQS_PARAMETER_DESC with "PM2.5" in the PM2.5 datasets.
+EPAair_PM25_NC2018_processed.csv <- fill(EPA3.select$AQS_PARAMETER_DESC, (PM2.5))
+EPAair_PM25_NC2019_processed.csv <- fill(EPA4.select, AQS_PARAMETER_DESC = (PM2.5))
 
 #6. 
 
