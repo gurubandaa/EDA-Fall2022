@@ -27,17 +27,35 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Wr
 The completed exercise is due on Friday, Oct7th @ 5:00pm.
 
 ## Set up your session 
-1. Check your working directory, load the `tidyverse` and `lubridate` packages, and upload all four raw data files associated with the EPA Air dataset, being sure to set string columns to be read in a factors. See the README file for the EPA air datasets for more information (especially if you have not worked with air quality data previously). 
+1. Check your working directory, load the `tidyverse` and `lubridate` packages, and upload all four raw data files associated with the EPA Air dataset, being sure to set string columns to be read in as factors. See the README file for the EPA air datasets for more information (especially if you have not worked with air quality data previously). 
 
 2. Explore the dimensions, column names, and structure of the datasets. 
 
 ```{r, message = FALSE}
-#1.
+#1. I checked my working directory using the getwd() function, loaded the `tidyverse` and `lubridate` packages, and uploaded all four raw data files associated with the EPA Air dataset.
 getwd()
 library(tidyverse)
 library(lubridate)
+EPA1 <- read.csv("./Data/Raw/EPAair_O3_NC2018_raw.csv", stringsAsFactors=TRUE)
+EPA2 <- read.csv("./Data/Raw/EPAair_O3_NC2019_raw.csv", stringsAsFactors=TRUE)
+EPA3 <- read.csv("./Data/Raw/EPAair_PM25_NC2018_raw.csv", stringsAsFactors=TRUE)
+EPA4 <- read.csv("./Data/Raw/EPAair_PM25_NC2019_raw.csv", stringsAsFactors=TRUE)
 
-#2.
+#2. I explored the dimensions, column names, and structure of the datasets using the dim(), View(), and str() functions.
+dim(EPA1)
+dim(EPA2)
+dim(EPA3)
+dim(EPA4)
+
+colnames(EPA1)
+colnames(EPA2)
+colnames(EPA3)
+colnames(EPA4)
+
+str(EPA1)
+str(EPA2)
+str(EPA3)
+str(EPA4)
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -47,13 +65,21 @@ library(lubridate)
 6. Save all four processed datasets in the Processed folder. Use the same file names as the raw files but replace "raw" with "processed".
 
 ```{r}
-#3
+#3. I changed date to date.
+EPA1$Date <- as.Date(EPA1$Date, format = "%y-%m-%d")
+EPA2$Date <- as.Date(EPA2$Date, format = "%y/%m/%d")
+EPA3$Date <- as.Date(EPA3$Date, format = "%y/%m/%d")
+EPA4$Date <- as.Date(EPA4$Date, format = "%y/%m/%d")
 
-#4
+#4. I used the select() function to select the following columns: Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE
+EPA1.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA2.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA3.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA4.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
-#5
+#5. I used the mutate() function to fill all cells in AQS_PARAMETER_DESC with "PM2.5" in the PM2.5 datasets.
 
-#6
+#6. 
 
 ```
 
