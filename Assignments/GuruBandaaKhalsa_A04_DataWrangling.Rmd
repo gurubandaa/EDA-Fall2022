@@ -72,17 +72,25 @@ EPA3$Date <- as.Date(EPA3$Date, format = "%y/%m/%d")
 EPA4$Date <- as.Date(EPA4$Date, format = "%y/%m/%d")
 
 #4. I used the select() function to select the following columns: Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE
-EPAair_O3_NC2018_processed.csv <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-EPAair_O3_NC2019_processed.csv <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA1.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA2.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPA3.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPA4.select <- select(EPA1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
-#5. I used the fill() function to fill all cells in AQS_PARAMETER_DESC with "PM2.5" in the PM2.5 datasets.
-EPAair_PM25_NC2018_processed.csv <- fill(EPA3.select$AQS_PARAMETER_DESC, (PM2.5))
-EPAair_PM25_NC2019_processed.csv <- fill(EPA4.select, AQS_PARAMETER_DESC = (PM2.5))
+#5. I filled all cells in AQS_PARAMETER_DESC with "PM2.5" in the PM2.5 datasets.
+EPA3.select$AQS_PARAMETER_DESC <- "PM2.5"
+EPA4.select$AQS_PARAMETER_DESC <- "PM2.5"
 
-#6. 
+#6. I renamed all four processed datasets and used the write.csv() function to save them in the Processed folder.
+EPAair_O3_NC2018_processed.csv <- EPA1.select
+EPAair_O3_NC2019_processed.csv <- EPA2.select
+EPAair_PM25_NC2018_processed.csv <- EPA3.select
+EPAair_PM25_NC2019_processed.csv <- EPA4.select
 
+write.csv(EPAair_O3_NC2018_processed.csv, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
+write.csv(EPAair_O3_NC2019_processed.csv, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
+write.csv(EPAair_PM25_NC2018_processed.csv, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
+write.csv(EPAair_PM25_NC2019_processed.csv, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
 ```
 
 
@@ -100,15 +108,19 @@ EPAair_PM25_NC2019_processed.csv <- fill(EPA4.select, AQS_PARAMETER_DESC = (PM2.
 11. Save your processed dataset with the following file name: "EPAair_O3_PM25_NC1718_Processed.csv"
 
 ```{r}
-#7
+#7. 
 
-#8
 
-#9
+#8. 
 
-#10
 
-#11
+#9. 
+
+
+#10. 
+
+
+#11. 
 
 ```
 
@@ -119,14 +131,16 @@ EPAair_PM25_NC2019_processed.csv <- fill(EPA4.select, AQS_PARAMETER_DESC = (PM2.
 13. Call up the dimensions of the summary dataset.
 
 ```{r}
-#12a
+#12a. 
 
-#12b
 
-#13
+#12b. 
+
+
+#13. 
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
-> Answer: 
+> Answer: We used the function `drop_na` rather than `na.omit` because `drop_na` 
