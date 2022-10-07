@@ -183,7 +183,7 @@ NTL.PeterPaul.summaries <-
   filter(depth == 0) %>%
   group_by(lakename, month) %>%
   filter(!is.na(temperature_C) & !is.na(tn_ug) & !is.na(tp_ug)) %>%
-  summarize(meantemp = mean(temperature_C), 
+  summarise(meantemp = mean(temperature_C), 
             sdtemp = sd(temperature_C), 
             meanTN = mean(tn_ug), 
             sdTN = sd(tn_ug), 
