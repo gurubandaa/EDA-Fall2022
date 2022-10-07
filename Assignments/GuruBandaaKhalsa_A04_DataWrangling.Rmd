@@ -152,12 +152,16 @@ EPAair_O3_PM25_NC1718_Summary <-
             meanPM2.5AQI = mean(PM2.5))
 
 #12b. I added a pipe with the drop_na() function to remove instances where a month and year combination (i.e. row) does not have corresponding ozone and PM2.5 data.
-EPAair_O3_PM25_NC1718_Summary %>%
-  drop_na(EPAair_O3_PM25_NC1718_Summary$Ozone)
+EPAair_O3_PM25_NC1718_Summary <-
+  EPAair_O3_PM25_NC1718_Processed.csv %>%
+  group_by(Site.Name, Month, Year) %>%
+  summarise(meanOzoneAQI = mean(Ozone),
+            meanPM2.5AQI = mean(PM2.5))
+  drop_na(EPAair_O3_PM25_NC1718_Summary)
 
 View(EPAair_O3_PM25_NC1718_Summary)
 
-#13. I used the dim() function to call up the dimensions of the summary dataset.
+#13. I used the dim() function to call up the dimensions of the summary dataset.  They are 308 x 5.
 dim(EPAair_O3_PM25_NC1718_Summary)
 ```
 
