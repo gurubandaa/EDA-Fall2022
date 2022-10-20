@@ -10,7 +10,7 @@ geometry: margin=2.54cm
 #For it to work, the "formatR" package needs to be installed
 
 #install.packages('formatR')
-knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=45), tidy=TRUE)
 ```
 
 ## OVERVIEW
@@ -18,13 +18,13 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
 This exercise accompanies the lessons in Environmental Data Analytics on Data Visualization 
 
 ## Directions
-1. Rename this file `<FirstLast>_A02_CodingBasics.Rmd` (replacing `<FirstLast>` with your first and last name).
+1. Rename this file `<FirstLast>_A05_DataVisualization.Rmd` (replacing `<FirstLast>` with your first and last name).
 2. Change "Student Name" on line 3 (above) with your name.
 3. Work through the steps, **creating code and output** that fulfill each instruction.
 4. Be sure to **answer the questions** in this assignment document.
 5. When you have completed the assignment, **Knit** the text and code into a single PDF file.
 
-The completed exercise is due on Friday, Oct 14th @ 5:00pm.
+The completed exercise is due on Friday, Oct 21st @ 5:00pm.
 
 
 
@@ -39,16 +39,21 @@ the processed data file for the Niwot Ridge litter dataset (use the
 2. Make sure R is reading dates as date format; if not change the format to date.
 
 ```{r}
-#1 
+#1. I checked my working directory using the getwd() function, loaded the `tidyverse`, `lubridate`, and cowplot packages, and uploaded the NTL-LTER processed data files for nutrients and chemistry/physics for Peter and Paul Lakes.
+getwd()
+library(tidyverse)
+library(lubridate)
+library(cowplot)
+ <- read.csv("./Data/Raw/
 
-#2 
+#2. 
 
 ```
 ## Define your theme
 3. Build a theme and set it as your default theme.
 
 ```{r}
-#3
+#3. 
 
 ```
 
@@ -63,7 +68,7 @@ color it black. Adjust your axes to hide extreme values (hint: change the
 limits using `xlim()` and/or `ylim()`).
 
 ```{r}
-#4
+#4. 
 
 ```
 
@@ -77,7 +82,7 @@ Tip: R has a build in variable called `month.abb` that returns a list of months;
 see <https://r-lang.com/month-abb-in-r-with-example>
 
 ```{r}
-#5
+#5. 
 
 ```
 
@@ -95,9 +100,9 @@ of each land use)
 three facets rather than separated by color. 
 
 ```{r}
-#6
+#6. 
 
-#7
+#7. 
 
 
 ```
