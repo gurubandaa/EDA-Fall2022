@@ -31,10 +31,10 @@ The completed exercise is due on Friday, Oct 21st @ 5:00pm.
 ## Set up your session 
 1. Set up your session. Verify your working directory and load the tidyverse, 
 lubridate, & cowplot packages. Upload the NTL-LTER processed data files for  
-nutrients and chemistry/physics for Peter and Paul Lakes (use the tidy 
-[`NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv`] version) and 
-the processed data file for the Niwot Ridge litter dataset (use the
-[`NEON_NIWO_Litter_mass_trap_Processed.csv`] version). 
+nutrients and chemistry/physics for Peter and Paul Lakes
+(use the tidy [`NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv`]
+version) and the processed data file for the Niwot Ridge litter dataset
+(use the [`NEON_NIWO_Litter_mass_trap_Processed.csv`] version).
 
 2. Make sure R is reading dates as date format; if not change the format to date.
 
@@ -49,9 +49,12 @@ library(cowplot)
 NTL1 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Processed/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv", stringsAsFactors=TRUE)
 NTL2 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Processed/NEON_NIWO_Litter_mass_trap_Processed.csv", stringsAsFactors=TRUE)
 
-#2. I used the View() function to confirm that R is reading dates as date format.
+#2. I used the View() function to check that R is reading dates as date format.
 View(NTL1)
 View(NTL2)
+
+NTL1$sampledate <- as.Date(NTL1$sampledate, format = "%Y-%m-%d")
+NTL2$collectDate <- as.Date(NTL2$collectDate, format = "%Y-%m-%d")
 ```
 ## Define your theme
 3. Build a theme and set it as your default theme.
@@ -78,7 +81,12 @@ limits using `xlim()` and/or `ylim()`).
 #4. I created a ggplot graph with appropriate adjusted aesthetics for total
 # phosphorus (`tp_ug`) by phosphate (`po4`), with separate aesthetics for Peter
 # and Paul lakes.
-
+phosphorus.phosphate.plot <- ggplot(NTL1, aes(x = tp_ug, y = po4)) +
+  geom_point(aes(color = lakename)) +
+  geom_smooth(method = lm, color = "black") +
+  xlim(0, 150) +
+  ylim(0, 50)
+print(phosphorus.phosphate.plot)
 ```
 
 
@@ -94,13 +102,33 @@ see <https://r-lang.com/month-abb-in-r-with-example>
 #5. I created three separate boxplots of (a) temperature, (b) TP, and 
 # (c) TN, with month as the x axis and lake as a color aesthetic.  I also
 # created a cowplot that combines the three graphs.
+NTL1$month <- as.factor(NTL1$month)
 
+temp.boxplot <- ggplot(NTL1, aes(x = month, y = temperature_C, color = lakename)) +
+  geom_boxplot() +
+  geom_point() +
+  theme(legend.position = "none")
+print(temp.boxplot)
+
+tp.boxplot <- ggplot(NTL1, aes(x = month, y = tp_ug, color = lakename)) +
+  geom_boxplot() +
+  geom_point() +
+  theme(legend.position = "none")
+print(tp.boxplot)
+
+tn.boxplot <- ggplot(NTL1, aes(x = month, y = tn_ug, color = lakename)) +
+  geom_boxplot() +
+  geom_point() +
+  theme(legend.position = "top")
+print(tn.boxplot)
+
+plot_grid(temp.boxplot, tp.boxplot, tn.boxplot, nrow = 1, align = 'h', rel_widths = c(3.5, 3.5, 3.5))
 ```
 
 Question: What do you observe about the variables of interest over seasons 
 and between lakes? 
 
-> Answer: 
+> Answer: Temperature greatly increases from month 5 to month 9 and decreases drastically from month 9 to month 11 for both Paul Lake and Peter Lake.  There are slightly lower temperatures present across all months in Peter Lake compared to Paul Lake.  TP slightly decreases from month 5 to month 6 and slightly increases from month 8 to month 9 in Paul Lake.  TP gradually increases from months 5 through 9 in Peter Lake.  TN gradually increases over time fpr both Paul Lake and Peter Lake.
 
 6. [Niwot Ridge] Plot a subset of the litter dataset by displaying only the 
 "Needles" functional group. Plot the dry mass of needle litter by date and 
@@ -114,13 +142,25 @@ three facets rather than separated by color.
 #6. I plotted a subset of the litter dataset by displaying only the "Needles"
 # functional group.  I also plotted the dry mass of needle litter by date and 
 # separated by NLCD class with a color aesthetic.
-
+needles.plot <- 
+  ggplot(NTL2, aes(x = collectDate, y = dryMass)) + 
+  geom_point(aes(color = nlcdClass)) +
+  xlab(expression("Date")) +
+  ylab(expression("Needle Dry Mass")) +
+  labs(color = "Needles Functional Group")
+print(needles.plot)
 
 #7. I created the same plot as number 6. but with NLCD classes separated into 
 # three facets rather than separated by color.
-
-
+needles.plot <- 
+  ggplot(NTL2, aes(x = collectDate, y = dryMass)) + 
+  geom_point() +
+  xlab(expression("Date")) +
+  ylab(expression("Needle Dry Mass")) +
+  labs(color = "Needles Functional Group") +
+  facet_wrap(vars(nlcdClass), nrow = 3)
+print(needles.plot)
 ```
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
 
-> Answer:
+> Answer: The plot for 7. solves the issue of overlapping points that occurs in the plot for 6.  The data for each functional group are easier to distinguish in the plot for 7.
