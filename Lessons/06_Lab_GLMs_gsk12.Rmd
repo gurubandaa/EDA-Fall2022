@@ -104,16 +104,54 @@ What other variables can we add to improve model?
 ```{r}
 
 #Exercise 4: Build correlation plots and identify more possible explanatory variables to add to the regression.
-
+library(corrplot)
+EPAairData <- 
+  EPAair %>%
+  select(PM2.5, Ozone) %>%
+  na.omit()
+EPAairCorr <- cor(EPAairData)
+corrplot(EPAairCorr, method = "ellipse")
+corrplot.mixed(EPAairCorr, upper = "ellipse")
 
 
 
 #Exercise 5: Choose a model by AIC in a Stepwise Algorithm. Do the results from AIC match the variables you selected on Exercise 5?
 
+# Correct work from class:
+
+library(dplyr)
+EPAair.subset <-
+  EPAair %>%
+  select(meanLat:Ozone) %>%
+  na.omit()
+
+EPAairCorr <- cor(EPAair.subset)
+corrplot(EPAairCorr, method = "ellipse")
+corrplot.mixed(EPAairCorr, upper = "ellipse")
+
+
+# My work:
+
+EPAair.dropna <- drop_na(EPAair)
+
+TPAIC <- lm(data = EPAair.dropna, PM2.5 ~ Ozone)
+
+step(TPAIC)
+TPmodel <- lm(data = EPAair.dropna, PM2.5 ~ Ozone)
+summary(TPmodel)
 
 
 
 #Exercise 6: Run another regression using the variables selected on Exercise 6. Compare r-squared value with the one from Exercise 5. 
+OzonebyALL.regression <- lm(data = EPAair.subset, PM2.5 ~ Ozone + Year + Month + meanLng + meanLat)
+summary(OzonebyALL.regression)
+
+step(OzonebyALL.regression)
+# If you remove Year, you are going to improve your AIC.  Year should be removed from the series (AIC without Year is one unit less than with Year).  Continue removing one at a time.
+
+OzonebyBEST.regression <- lm(data = EPAair.subset, PM2.5 ~ Ozone + Month + meanLng + meanLat)
+summary(OzonebyBEST.regression)
+step(OzonebyBEST.regression)
 
 ```
 
@@ -153,4 +191,26 @@ print(Litter.Totals.plot)
 
 ```{r}
 #Exercise 7: Improve the plot```
+# a. Order by groups from high to low mean
+assign.group <- function(site)
+  return(Litter.Totals.groups[as.character(site), 2])
 
+treatgroups = array(0, length(Litter.Totals))
+for(i in length(Litter.Totals)){
+  treatgroups = assign.group(Litter.Totals$plotID)
+}
+
+Litter.Totals <- cbind(Litter.Totals, groups = treatgroups)
+Litter.Totals$plotID <-
+  reoreder(Litter.Totals$plotID, Litter.Totals$dryMass, FUN = mean)
+
+# Graph the results
+Litter.Totals.plot2 <- ggplot(Litter.Totals, aes(x = plotID, y = dryMass)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  stat_summary(geom = "text", fun = max, vjust = -1, size = 3.5,
+               label = c("abc", "ab", "abcd", "bcd", "bcd", "a", 
+                         "d", "abcd", "cd", "d", "abcd", "abcd")) +
+  labs(x = "Plot ID", y = "Dry Mass (g)") +
+  ylim(0, 85)
+print(Litter.Totals.plot2)
