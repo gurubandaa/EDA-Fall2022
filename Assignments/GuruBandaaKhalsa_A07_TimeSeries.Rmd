@@ -86,8 +86,8 @@ GaringerOzone.wrangle <-
 #5. I created a new data frame that contains a sequence of dates from
 #   2010-01-01 to 2019-12-31 named 'Days' and renamed the column name in Days
 #   to 'Date.'
-Days <- as.data.frame(seq.Date(from = as.Date("2010-01-01"), to = as.Date("2019-12-31"), by = 1))
-colnames(Days)[1] = "Date"
+Days <- as.data.frame(seq(from = as.Date("2010-01-01"), to = as.Date("2019-12-31"), by = 1))
+colnames(Days) = "Date"
 
 #6. I used a `left_join` to combine the data frame
 GaringerOzone <- left_join(Days, GaringerOzone.wrangle, by = c("Date"))
@@ -101,11 +101,14 @@ GaringerOzone <- left_join(Days, GaringerOzone.wrangle, by = c("Date"))
 ```{r}
 #7. I created a line plot depicting ozone concentrations over time with actual
 #   concentrations in ppm, not AQI values.
-
-
+ozonePlot <- ggplot(GaringerOzone, aes(x = Date, y = Daily.Max.8.hour.Ozone.Concentration)) +
+  geom_line(aes(y = Daily.Max.8.hour.Ozone.Concentration, x = Date), size = 0.25, color = "#c13d75ff") +
+  geom_smooth(method = "lm", col = "cyan4")
+print(ozonePlot)
 ```
 
->Answer:
+>Answer: My plot suggests a slight negative trend in ozone concentration over
+#        time.
 
 ## Time Series Analysis
 
@@ -114,11 +117,14 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 8. Use a linear interpolation to fill in missing daily data for ozone concentration. Why didn't we use a piecewise constant or spline interpolation?
 
 ```{r}
-#8. 
+#8. I used a linear interpolation to fill in missing daily data for ozone concentration
+Ozone_Cnx = zoo::na.approx(Daily.Max.8.hour.Ozone.Concentration)
 
 ```
 
-> Answer: 
+> Answer: We did not use a piecewise constant or spline interpolation because
+            Ozone concentrations have changed over the 2010s at this station.
+          They have gradually decreased.
 
 
 9. Create a new data frame called `GaringerOzone.monthly` that contains aggregated data: mean ozone concentrations for each month. In your pipe, you will need to first add columns for year and month to form the groupings. In a separate line of code, create a new Date column with each month-year combination being set as the first day of the month (this is for graphing purposes only)
