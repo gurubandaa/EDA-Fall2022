@@ -18,7 +18,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on time se
 4. When you have completed the assignment, **Knit** the text and code into a single PDF file.
 5. After Knitting, submit the completed exercise (PDF file) to the dropbox in Sakai. Add your last name into the file name (e.g., "Fay_A07_TimeSeries.Rmd") prior to submission.
 
-The completed exercise is due on Tuesday, March 16 at 11:59 pm.
+The completed exercise is due on Tuesday, November 4 at 5:00 pm.
 
 ## Set up 
 1. Set up your session:
@@ -30,7 +30,35 @@ The completed exercise is due on Tuesday, March 16 at 11:59 pm.
 2. Import the ten datasets from the Ozone_TimeSeries folder in the Raw data folder. These contain ozone concentrations at Garinger High School in North Carolina from 2010-2019 (the EPA air database only allows downloads for one year at a time). Import these either individually or in bulk and then combine them into a single dataframe named `GaringerOzone` of 3589 observation and 20 variables. 
 
 ```{r, message = FALSE}
-#1
+#1. I checked my working directory using the getwd() function, loaded the
+# `tidyverse,' `lubridate,' 'zoo,' and 'trend' packages, and set knitting
+# settings.
+getwd()
+library(tidyverse)
+library(lubridate)
+library(zoo)
+library(trend)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
+
+# I assigned a pre-built theme from Ggplot as a common theme across all plots
+# in my analysis session.
+mytheme <- theme_classic(base_size = 14) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+
+#2. I imported the ten datasets from the Ozone_TimeSeries folder in the Raw
+# data folder
+OTS1 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS2 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS3 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS4 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS5 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS6 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS7 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS8 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS9 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+OTS10 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+View(NTL1)
 
 ```
 
@@ -45,13 +73,14 @@ The completed exercise is due on Tuesday, March 16 at 11:59 pm.
 6. Use a `left_join` to combine the data frames. Specify the correct order of data frames within this function so that the final dimensions are 3652 rows and 3 columns. Call your combined data frame GaringerOzone. 
 
 ```{r}
-# 3
+#3. I set my date column as a date class.
+NTL1$sampledate <- as.Date(NTL1$sampledate, format = "%m/%d/%y")
 
-# 4
+#4. 
 
-# 5
+#5. 
 
-# 6
+#6. 
 
 
 ```
@@ -61,7 +90,7 @@ The completed exercise is due on Tuesday, March 16 at 11:59 pm.
 7. Create a line plot depicting ozone concentrations over time. In this case, we will plot actual concentrations in ppm, not AQI values. Format your axes accordingly. Add a smoothed line showing any linear trend of your data. Does your plot suggest a trend in ozone concentration over time?
 
 ```{r}
-#7
+#7. 
 
 ```
 
@@ -74,7 +103,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 8. Use a linear interpolation to fill in missing daily data for ozone concentration. Why didn't we use a piecewise constant or spline interpolation?
 
 ```{r}
-#8
+#8. 
 
 ```
 
@@ -84,7 +113,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 9. Create a new data frame called `GaringerOzone.monthly` that contains aggregated data: mean ozone concentrations for each month. In your pipe, you will need to first add columns for year and month to form the groupings. In a separate line of code, create a new Date column with each month-year combination being set as the first day of the month (this is for graphing purposes only)
 
 ```{r}
-#9
+#9. 
 
 ```
 
@@ -92,7 +121,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 10. Generate two time series objects. Name the first `GaringerOzone.daily.ts` and base it on the dataframe of daily observations. Name the second `GaringerOzone.monthly.ts` and base it on the monthly average ozone values. Be sure that each specifies the correct start and end dates and the frequency of the time series.
 
 ```{r}
-#10
+#10. 
 
 ```
 
@@ -100,7 +129,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 11. Decompose the daily and the monthly time series objects and plot the components using the `plot()` function.
 
 ```{r}
-#11
+#11. 
 
 
 ```
@@ -109,7 +138,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 12. Run a monotonic trend analysis for the monthly Ozone series. In this case the seasonal Mann-Kendall is most appropriate; why is this?
 
 ```{r}
-#12
+#12. 
 
 
 
@@ -120,7 +149,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 13. Create a plot depicting mean monthly ozone concentrations over time, with both a geom_point and a geom_line layer. Edit your axis labels accordingly.
 
 ```{r}
-# 13
+# 13. 
 
 
 
@@ -136,11 +165,11 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 16. Run the Mann Kendall test on the non-seasonal Ozone monthly series. Compare the results with the ones obtained with the Seasonal Mann Kendall on the complete series.
 
 ```{r}
-#15
+#15. 
 
 
 
-#16
+#16. 
 
 
 
