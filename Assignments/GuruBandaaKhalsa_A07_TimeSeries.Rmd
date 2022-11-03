@@ -31,8 +31,8 @@ The completed exercise is due on Tuesday, November 4 at 5:00 pm.
 
 ```{r, message = FALSE}
 #1. I checked my working directory using the getwd() function, loaded the
-# `tidyverse,' `lubridate,' 'zoo,' and 'trend' packages, and set knitting
-# settings.
+#   `tidyverse,' `lubridate,' 'zoo,' and 'trend' packages, and set knitting
+#   settings.
 getwd()
 library(tidyverse)
 library(lubridate)
@@ -47,18 +47,19 @@ mytheme <- theme_classic(base_size = 14) +
         legend.position = "top")
 
 #2. I imported the ten datasets from the Ozone_TimeSeries folder in the Raw
-# data folder
+#   data folder and then combined them into a single dataframe
 OTS1 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS2 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS3 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS4 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS5 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS6 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS7 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS8 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS9 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-OTS10 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
-View(NTL1)
+OTS2 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2011_raw.csv")
+OTS3 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2012_raw.csv")
+OTS4 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2013_raw.csv")
+OTS5 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2014_raw.csv")
+OTS6 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2015_raw.csv")
+OTS7 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2016_raw.csv")
+OTS8 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2017_raw.csv")
+OTS9 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2018_raw.csv")
+OTS10 <- read.csv("~/Desktop/Masters at Duke/Second Year/Fall Semester/Environmental Data Analytics/EDA-Fall2022/Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2019_raw.csv")
+
+GaringerOzone <- rbind(OTS1, OTS2, OTS3, OTS4, OTS5, OTS6, OTS7, OTS8, OTS9, OTS10)
 
 ```
 
@@ -74,14 +75,22 @@ View(NTL1)
 
 ```{r}
 #3. I set my date column as a date class.
-NTL1$sampledate <- as.Date(NTL1$sampledate, format = "%m/%d/%y")
+GaringerOzone$Date <- as.Date(GaringerOzone$Date, format = "%m/%d/%Y")
 
-#4. 
+#4. I wrangled my dataset so that it only contains the columns Date,
+#   Daily.Max.8.hour.Ozone.Concentration, and DAILY_AQI_VALUE
+GaringerOzone.wrangle <-
+  GaringerOzone %>%
+  select(Date, Daily.Max.8.hour.Ozone.Concentration, DAILY_AQI_VALUE)
 
-#5. 
+#5. I created a new data frame that contains a sequence of dates from
+#   2010-01-01 to 2019-12-31 named 'Days' and renamed the column name in Days
+#   to 'Date.'
+Days <- as.data.frame(seq.Date(from = as.Date("2010-01-01"), to = as.Date("2019-12-31"), by = 1))
+colnames(Days)[1] = "Date"
 
-#6. 
-
+#6. I used a `left_join` to combine the data frame
+GaringerOzone <- left_join(Days, GaringerOzone.wrangle, by = c("Date"))
 
 ```
 
@@ -90,7 +99,9 @@ NTL1$sampledate <- as.Date(NTL1$sampledate, format = "%m/%d/%y")
 7. Create a line plot depicting ozone concentrations over time. In this case, we will plot actual concentrations in ppm, not AQI values. Format your axes accordingly. Add a smoothed line showing any linear trend of your data. Does your plot suggest a trend in ozone concentration over time?
 
 ```{r}
-#7. 
+#7. I created a line plot depicting ozone concentrations over time with actual
+#   concentrations in ppm, not AQI values.
+
 
 ```
 
