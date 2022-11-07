@@ -119,7 +119,7 @@ mapView(counties_sf, zcol = "AWATER")
 
 ```{r read HUCs shapefile}
 #Read the shapefile into an sf dataframe named "huc8_sf"
-
+huc8_sf <- st_read('.Data/Spatial/NCHUC8.shp')
 
 #Reveal the columns
 
