@@ -1,11 +1,13 @@
 ---
-title: "Assignment 8: Spatial Analysis in R"
+title: 'Assignment 8: Spatial Analysis in R'
 author: "GuruBandaa Khalsa"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 geometry: margin=2.54cm
-editor_options: 
+editor_options:
   chunk_output_type: console
-  markdown: 
+  markdown:
     wrap: 72
 ---
 
@@ -223,14 +225,18 @@ Now let's zoom into a particular county and examine the gages located there.
 
 ```{r}
 #22. Select the county.
-counties.sf.utm %>%
-  filter
+LANcounties.utm <- counties.sf.utm %>%
+  filter(NAME == "Lancaster")
 
 #23. Select gages within the selected county.
-
+LANGAGEcounties.utm <- gage.sf.utm[LANcounties.utm, ]
 
 #24. Plot.
-
-
+ggplot() + 
+  geom_sf(data = counties.sf.utm, fill = 'lightblue') + 
+  geom_sf(data = LANcounties.utm, fill = 'forestgreen') +
+  geom_sf(data = LANGAGEcounties.utm, color = 'yellow', alpha = 0.3) +
+  ggtitle("NWIS Gage Locations in Lancaster County, NE, in UTM Zone 14N",
+          subtitle = "GuruBandaa Khalsa")
 
 ```
