@@ -48,8 +48,10 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
 Indicate this website as the as the URL to be scraped. (In other words, read the contents into an `rvest` webpage object.)
 
 ```{r set.the.scraping.website}
-#2. 
-
+#2. I indicated the website as the URL to be scraped by reading the contents
+#   into an `rvest` webpage object.
+webpage <- read_html('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year=2021')
+webpage
 
 ```
 
@@ -57,7 +59,7 @@ Indicate this website as the as the URL to be scraped. (In other words, read the
 
 * From the "1. System Information" section:
  * Water system name
- * PSWID
+ * PWSID
  * Ownership
  
 * From the "3. Water Supply Sources" section:
@@ -68,14 +70,14 @@ In the code chunk below scrape these values, assigning them to four separate var
 >HINT: The first value should be "Durham", the second "03-32-010", the third "Municipality", and the last should be a vector of 12 numeric values (represented as strings), with the first value being "27.6400".
 
 ```{r scrape.the.data}
-#3. 
-water.system.name <- 
+#3. I scraped the desired values and assigned them to four separate variables.
+water.system.name <- webpage %>% html_nodes("div+ table tr:nth-child(1) td:nth-child(2)") %>% html_text()
   
-pswid <- 
+pwsid <- webpage %>% html_nodes("td tr:nth-child(1) td:nth-child(5)") %>% html_text()
   
-ownership <- 
+ownership <- webpage %>% html_nodes("div+ table tr:nth-child(2) td:nth-child(4)") %>% html_text()
   
-max.withdrawals.mgd <- 
+max.withdrawals.mgd <- webpage %>% html_nodes("th~ td+ td") %>% html_text()
 
 ```
 
@@ -89,29 +91,62 @@ max.withdrawals.mgd <-
 5. Create a line plot of the maximum daily withdrawals across the months for 2021
 
 ```{r create.a.dataframe.from.scraped.data}
-#4. 
+#4. I converted my scraped data into a dataframe and manually made a column
+#   for the months associated with the MGD.
+Month <- c(1, 5, 9, 2, 6, 10, 3, 7, 11, 4, 8, 12)
+Year <- c(2021)
 
+electricity_profiles <- data.frame(
+    Water_System = water.system.name,
+    PWSID = pwsid,
+    Ownership = ownership,
+    Max_Day_Use = max.withdrawals.mgd
+    ) %>%
+    mutate(Month = Month) %>%
+    mutate(Year = Year) %>%
+    mutate( Date = my(paste0(Month,"-",Year))
+    )
 
-
-#5. 
-
-
+#5. I created a line plot of the maximum daily withdrawals across the months
+#   for 2021.
+ggplot(electricity_profiles, aes(x = Date, y = max.withdrawals.mgd)) + 
+  geom_line(aes(group = 1)) + 
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = paste("2021 Monthly Maximum Daily Withdrawals"),
+       subtitle = "GuruBandaa Khalsa",
+       y="Max Day Use",
+       x="Date")
 
 ```
 
 6. Note that the PWSID and the year appear in the web address for the page we scraped. Construct a function using your code above that can scrape data for any PWSID and year for which the NC DEQ has data. **Be sure to modify the code to reflect the year and site (pwsid) scraped**.
 
 ```{r construct.a.scraping.function}
-#6. 
+#6. I constructed a function using my code from above that can scrape data for
+#   any PWSID and year for which the NC DEQ has data.
+scrape.it <- function(Year){
+  the_url <- ifelse(Year==2021,
+                    'https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010',
+                    paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year=',Year))
+  
+  webpage2 <- read_html(paste0("https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year="), Year)
+  }
 
-
+scrape.it2 <- function(pwsid){
+  the_url <- ifelse(pwsid==03-32-010,
+                    'https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year=2021',
+                    paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=', pwsid, '&year=2021'))
+  
+  webpage3 <- read_html(paste0("https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid="), pwsid)
+  }
 
 ```
 
 7. Use the function above to extract and plot max daily withdrawals for Durham (PWSID='03-32-010') for each month in 2015
 
 ```{r fetch.and.plot.Durham.2015.data}
-#7. 
+#7. I used the above function to extract and plot max daily withdrawals for
+#   Durham (PWSID='03-32-010') for each month in 2015.
 
 
 ```
