@@ -426,5 +426,47 @@ scrape.it <- function(pwsid, Year){
   
 return(the_df)
 }
+
+
+
+
+the_years = rep(2010:2019)
+pwsid3 = '01-11-010'
+asheville_decade <- lapply(X = the_years,
+                           FUN = scrape.it2,
+                           pwsid = pwsid3)
+asheville_decade_bind <- bind_rows(asheville_decade)
+
+ggplot(asheville_decade_bind) +
+  geom_line(aes(x = Month, y = max.withdrawals.mgd, color = Year))
+
+
+#Subset the facilities
+withdrawals_subset <-  sample(max.withdrawals.mgd, 10)
+
+
+scrape.it2 <- function(pwsid2, Year){
+
+  webpage <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=', pwsid2, '&year=', Year))
+
+  water.system.name <- webpage %>% html_nodes("div+ table tr:nth-child(1) td:nth-child(2)") %>% html_text()
+  pwsid2 <- webpage %>% html_nodes("td tr:nth-child(1) td:nth-child(5)") %>% html_text()
+  ownership <- webpage %>% html_nodes("div+ table tr:nth-child(2) td:nth-child(4)") %>% html_text()
+  max.withdrawals.mgd <- webpage %>% html_nodes("th~ td+ td") %>% html_text()
+
+  the_df3 <- data.frame(
+    "WaterSystem" = water.system.name,
+    "PWSID" = pwsid2,
+    "Ownership" = ownership,
+    "Max Day Use" = as.numeric(max.withdrawals.mgd)) %>%
+    mutate(Month = Month,
+           Year = Year,
+           Date = my(paste0(Month,"-",Year)),
+           PWSID = !!pwsid2,
+           Ownership = !!ownership,
+    )
+
+  return(the_df3)
+}
 ```
 
