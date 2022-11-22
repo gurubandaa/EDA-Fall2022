@@ -366,5 +366,65 @@ ggplot(the_df,aes(x=Date,y=Avg_Withdrawals_mgd,color=Facility_name)) +
        y="Withdrawal (mgd)",
        x="Date")
 
+
+
+
+
+# Some scratch work from A09
+Years <- c(2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021)
+
+scrape.it <- function(pwsid, Years){
+  webpage <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=', pwsid, '&year=', Years))
+  
+  water.system.name <- webpage %>% html_nodes("div+ table tr:nth-child(1) td:nth-child(2)") %>% html_text()
+  
+  pwsid <- webpage %>% html_nodes("td tr:nth-child(1) td:nth-child(5)") %>% html_text()
+  
+  ownership <- webpage %>% html_nodes("div+ table tr:nth-child(2) td:nth-child(4)") %>% html_text()
+  
+  max.withdrawals.mgd <- webpage %>% html_nodes("th~ td+ td") %>% html_text()
+  
+  the_df2 <- data.frame(
+      "WaterSystem" = water.system.name,
+      "PWSID" = pwsid,
+      "Ownership" = ownership,
+      "Max Day Use" = as.numeric(max.withdrawals.mgd)) %>%
+      mutate(Month = Month,
+             Year = Years,
+             Date = my(paste0(Month,"-",Years)),
+             PWSID = !!pwsid,
+             Ownership = !!ownership
+      )
+  
+return(the_df2)
+}
+
+
+pwsids <- webpage %>% html_nodes("td tr:nth-child(1) td:nth-child(5)") %>% html_text()
+pwsids <- sample(pswids, 1)
+Years <- c(2010:2021)
+
+the_df2 <- cross2(pwsids, Years) %>%
+  map(lift(scrape.it)) %>%
+  bind_rows()
+
+
+scrape.it <- function(pwsid, Year){
+  webpage <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=', pwsids, '&year=', Years))
+  
+  water.system.name <- webpage %>% html_nodes("div+ table tr:nth-child(1) td:nth-child(2)") %>% html_text()
+  
+  pwsids <- webpage %>% html_nodes("td tr:nth-child(1) td:nth-child(5)") %>% html_text()
+  
+  ownership <- webpage %>% html_nodes("div+ table tr:nth-child(2) td:nth-child(4)") %>% html_text()
+  
+  max.withdrawals.mgd <- webpage %>% html_nodes("th~ td+ td") %>% html_text()
+  
+  the_df2 <- cross2(pwsids, Years) %>%
+  map(lift(scrape.it)) %>%
+  bind_rows()
+  
+return(the_df)
+}
 ```
 
